@@ -1,0 +1,31 @@
+WebSocket是在HTML5中定义的全双工协议。传统的ajax可以实现数据推送，ajax轮询可以实现网页实时的局部更新，ajax和comet技术(即eventSource)可以实现
+数据的双向流动,但是这种“双向流动”不是实时的，使用eventSource获取url推送的数据时需要“触发”某种条件。在聊天室程序中，这个事件就是客户端推送过来
+一些字符串数据,而且，使用这种方式创建的连接是不稳定的。WebSocket能够创建一个Duplex可读可写流，而且，它是长连接，足够稳定。在聊天室实例
+中有更好的性能。node.js尚未封装webSocket服务端的API,但是已经有人完成了。可以通过以下方式下载:
+首先启动cli，选好路径
+$npm install nodejs-websocket
+然后在客户端中以如下方式引用:
+let ws=require('nodejs-websocket');
+
+该API封装了一些有用的功能:
+
+1.创建wssocket服务器: let wsserver=ws.createServer([options],[callback]);//和http服务器基本一样
+
+2.第一个参数是一个选项对象。包括：validProtocols数组,用于确定有效的协议。selectProtocol是一个回调函数，用于解决协议的响应问题。第二个参数是
+回调函数，会在服务器实例创建成功后调用。
+
+3.ws.connect(url, [options], [callback]);连接到一个url，和net模块基本一样。回调函数自动添加到connect事件中。实际上，我们很少使用这个api
+
+4.ws.setBinaryFragmentation(bytes) 没看懂= =
+
+5.ws.setMaxBufferLength(bytes) 设置一次传输中最大的二进制流字节数，可以防止内存打架。
+
+6.server.listen(port, [host], [callback]);监听函数
+
+7.server.close([callback]);停止建立新的连接，同时已有的连接会保持。
+
+8.server.socket;该属性暴露当前服务器的套接字。
+
+9.server.connections.这是一个数组，包含当前所有的客户端。太好了，我们不需要再手动维护客户端数组了，赞美开发者。
+
+10.事件：'listening()' 'close()' 'error(errObj)' 'connection(conn)' 都是相当基础的网络事件。
