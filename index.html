@@ -1,0 +1,33 @@
+<!--jquery真香-->
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="/jquery-3.4.1.min.js"></script>
+	<meta charset="utf-8">
+	<meta content="TestPage">
+</head>
+<body>
+	<input type="text" name="">
+	<noscript>It seems that your browser doesn't support javascript</noscript>
+	<script type="text/javascript">
+		'uses strict';
+		let name=prompt('nickname:');
+		$('input').css('width','100%');
+		let socket=new WebSocket('ws://localhost:1001/');
+		let clog=console.log;
+		socket.onopen=function(){clog('succ')}
+		socket.onmessage=function(e){
+			let data=e.data;
+			$(`<p><b>${data}</b></p>`).insertBefore($('input'));
+		}
+		socket.onclose=_=>clog('close successfully');
+		let input=$('input')[0];
+		input.onchange=_=>{
+			let data=$('input').val();
+			$('input').val('');
+			clog(data);
+			socket.send(name+':'+data);
+		}
+	</script>
+</body>
+</html>
