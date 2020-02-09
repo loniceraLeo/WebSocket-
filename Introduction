@@ -29,3 +29,7 @@ let ws=require('nodejs-websocket');
 9.server.connections.这是一个数组，包含当前所有的客户端。太好了，我们不需要再手动维护客户端数组了，赞美开发者。
 
 10.事件：'listening()' 'close()' 'error(errObj)' 'connection(conn)' 都是相当基础的网络事件。
+
+其他api的请查阅官方文档。
+
+注意，wsserver不能和http共用端口;wsserver实例创建了以后回调函数的参数不是底层socket，而是封装过的connect，不要搞混了。
