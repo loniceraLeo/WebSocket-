@@ -32,6 +32,6 @@ function broadcast(srv,msg){
 let wssrv=ws.createServer(connect=>{
 	clog('success');
 	connect.on('text',$=>broadcast(wssrv,$));
-	clog(wssrv.socket);
+	connect.on('error',$=>clog('连接在某处断开');
 }).listen(1001,_=>clog('ok'));
 httpserver.listen(1000,_=>clog('on listen'));
